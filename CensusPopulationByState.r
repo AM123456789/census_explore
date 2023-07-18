@@ -10,8 +10,8 @@ census_api_key("API_KEY", install = TRUE, overwrite=TRUE)
 
 
 #2017-2021 State Populations
-Statei <- get_acs(geography ="state",variables = "B01001A_012")
-View(Statei)
+StatePopulation <- get_acs(geography ="state",variables = "B01001A_012")
+View(StatePopulation)
 #Plot
-ggplot (Statei, aes(x = estimate, y = NAME)) + geom_point()
+ggplot (StatePopulation, aes(x = estimate, y = NAME)) + geom_point()
 
