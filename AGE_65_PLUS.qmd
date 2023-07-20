@@ -1,0 +1,126 @@
+```{r}
+#| warning: false
+#| message: false
+library(tidycensus)
+library(tidyverse)
+library(choroplethr)
+library(choroplethrMaps)
+
+df = get_acs(geography = "State",
+             variables = c(pop_65_plus = "S0101_C01_030"),
+             survey    = "acs1",
+             year      = 2021,
+             output    = "wide",
+             cache_table = TRUE)
+totaldf = get_acs(geography = "State",
+             variables = c(total = "S0101_C01_001"),
+             survey    = "acs1",
+             year      = 2021,
+              output    = "wide",
+              cache_table = TRUE)
+percentdf  = get_acs(geography = "State",
+                     variables = c(total = "S0101_C01_001"),
+                     survey    = "acs1",
+                     year      = 2021,
+                     output    = "wide",
+                     cache_table = TRUE)
+names(df) <-c("geoid" ,"region" ,"value", "moe")
+names(totaldf) <-c("geoid" ,"region" ,"value", "moe")
+names(percentdf) <-c("geoid" ,"region" ,"value", "moe")
+df$region = tolower(df$region)
+percentdf$region = tolower(percentdf$region)
+totaldf$region = tolower(totaldf$region)
+percentdf$value = ((df$value/totaldf$value) * 100)
+totaldf$value = totaldf$value - df$value
+
+state_choropleth(percentdf,
+                 title = "PERCENT POPULATION OVER 65 \n2021 1-YEAR ACS S0101_C01_001",
+                 legend = "PERCENTAGE"
+                 )
+
+
+
+```
+
+---
+title: "2021 1-Year Estimate 65+ ALL STATES"
+author: "Anish Mangipudi"
+format: html
+editor: visual
+---
+
+## MAP AGE 65+
+
+## CODE
+
+```{r}
+#| warning: false
+#| message: false
+library(tidycensus)
+library(tidyverse)
+library(choroplethr)
+library(choroplethrMaps)
+
+
+state_pop <- get_acs(geography ="State",variables = "S0101_C01_030")
+names(state_pop) <-c("GEOID","states","variable","population_size","moe")
+
+ 
+df = get_acs(geography = "State",
+             variables = c(pop_65_plus = "S0101_C01_030"),
+             survey    = "acs1",
+             year      = 2021,
+             output    = "wide",
+             cache_table = TRUE)
+df$NAME = tolower(df$NAME)
+names(df) <-c("geoid" ,"region" ,"value", "moe")
+
+state_choropleth(df, 
+                 title         = "POPULATION 65+ \n2021 1-YEAR ACS S0101_C01_030",
+                 legend        = "POPULATION")
+
+```
+
+## MAP AGE UNDER 65
+
+## CODE
+
+```{r}
+#| warning: false
+#| message: false
+library(tidycensus)
+library(tidyverse)
+library(choroplethr)
+library(choroplethrMaps)
+
+state_pop <- get_acs(geography ="State",variables = "S0101_C01_030")
+names(state_pop) <-c("GEOID","states","variable","population_size","moe")
+
+df = get_acs(geography = "State",
+             variables = c(pop_65_plus = "S0101_C01_030"),
+             survey    = "acs1",
+             year      = 2021,
+             output    = "wide",
+             cache_table = TRUE)
+totaldf = get_acs(geography = "State",
+             variables = c(total = "S0101_C01_001"),
+             survey    = "acs1",
+             year      = 2021,
+              output    = "wide",
+              cache_table = TRUE)
+names(df) <-c("geoid" ,"region" ,"value", "moe")
+names(totaldf) <-c("geoid" ,"region" ,"value", "moe")
+df$region = tolower(df$region)
+totaldf$region = tolower(totaldf$region)
+
+
+
+totaldf$value = totaldf$value - df$value
+state_choropleth(totaldf, 
+                 title         = "POPULATION UNDER 65 \n2021 1-YEAR ACS S0101_C01_001",
+                 legend        = "POPULATION")
+
+
+
+
+```
