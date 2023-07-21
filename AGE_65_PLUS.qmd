@@ -4,6 +4,7 @@ author: "Anish Mangipudi"
 format: html
 editor: visual
 ---
+
 ```{r}
 #| warning: false
 #| message: false
@@ -52,7 +53,6 @@ state_choropleth(percent_df,
 
 ```
 
-
 ## MAP AGE 65+
 
 ## CODE
@@ -84,44 +84,4 @@ state_choropleth(df,
 
 ```
 
-## MAP AGE UNDER 65
-
-## CODE
-
-```{r}
-#| warning: false
-#| message: false
-
-library(tidycensus)
-library(tidyverse)
-library(choroplethr)
-library(choroplethrMaps)
-
-state_pop <- get_acs(geography ="State",variables = "S0101_C01_030")
-names(state_pop) <-c("GEOID","states","variable","population_size","moe")
-
-df = get_acs(geography = "State",
-             variables = c(pop_65_plus = "S0101_C01_030"),
-             survey    = "acs1",
-             year      = 2021,
-             output    = "wide",
-             cache_table = TRUE)
-total_df = get_acs(geography = "State",
-             variables = c(total = "S0101_C01_001"),
-             survey    = "acs1",
-             year      = 2021,
-              output    = "wide",
-              cache_table = TRUE)
-
-names(df) <-c("geoid" ,"region" ,"value", "moe")
-names(total_df) <-c("geoid" ,"region" ,"value", "moe")
-
-df$region = tolower(df$region)
-total_df$region = tolower(total_df$region)
-
-total_df$value = total_df$value - df$value
-state_choropleth(total_df, 
-                 title         = "POPULATION UNDER 65 \n2021 1-YEAR ACS S0101_C01_001",
-                 legend        = "POPULATION",
-                 num_colors = 7)
-```
+## 
