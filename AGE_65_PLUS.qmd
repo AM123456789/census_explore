@@ -51,13 +51,13 @@ state_choropleth(percent_df,
                  )
 
 ggplot(percent_df, aes(y = value)) +
-  geom_boxplot() + 
+  geom_boxplot(color="red", fill="orange", alpha=1) + 
   scale_y_continuous() +
   ggtitle("PERCENT DISTRIBUTION STATES\n WITH POPULATION 65+") +
   xlab("")+
 ylab("POPULATION")+
   theme(axis.text.x=element_blank(),
-        axis.ticks.x=element_blank())
+        axis.ticks.x=element_blank()) 
 
 
 
@@ -95,9 +95,9 @@ state_choropleth(df,
                  legend        = "POPULATION")
 
 ggplot(df, aes(y = value)) +
-  geom_boxplot() + 
+  geom_boxplot(color="red", fill="orange", alpha=1) + 
   scale_y_continuous() +
-  ggtitle("PERCENT DISTRIBUTION STATES\n WITH POPULATION 65+") +
+  ggtitle("POPULATION DISTRIBUTION STATES\n WITH POPULATION 65+") +
   xlab("")+
 ylab("POPULATION")+
   theme(axis.text.x=element_blank(),
