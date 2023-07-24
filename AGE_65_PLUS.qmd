@@ -13,7 +13,8 @@ library(tidycensus)
 library(tidyverse)
 library(choroplethr)
 library(choroplethrMaps)
-library(ggplot2)
+library(scales)
+
 
 df = get_acs(geography = "State",
              variables = c(pop_65_plus = "S0101_C01_030"),
@@ -52,7 +53,7 @@ state_choropleth(percent_df,
 
 ggplot(percent_df, aes(y = value)) +
   geom_boxplot(color="red", fill="orange", alpha=1) + 
-  scale_y_continuous() +
+  scale_y_continuous(label=comma) +
   ggtitle("PERCENT DISTRIBUTION STATES\n WITH POPULATION 65+") +
   xlab("")+
 ylab("POPULATION")+
@@ -76,11 +77,9 @@ library(tidycensus)
 library(tidyverse)
 library(choroplethr)
 library(choroplethrMaps)
-library(ggplot2)
+library(scales)
 
-state_pop <- get_acs(geography ="State",variables = "S0101_C01_030")
-names(state_pop) <-c("GEOID","states","variable","population_size","moe")
- 
+
 df = get_acs(geography = "State",
              variables = c(pop_65_plus = "S0101_C01_030"),
              survey    = "acs1",
@@ -96,7 +95,7 @@ state_choropleth(df,
 
 ggplot(df, aes(y = value)) +
   geom_boxplot(color="red", fill="orange", alpha=1) + 
-  scale_y_continuous() +
+  scale_y_continuous(label=comma) +
   ggtitle("POPULATION DISTRIBUTION STATES\n WITH POPULATION 65+") +
   xlab("")+
 ylab("POPULATION")+
