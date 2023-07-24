@@ -1,0 +1,107 @@
+---
+title: "2021 1-Year Estimate 65+ ALL STATES"
+author: "Anish Mangipudi"
+format: html
+editor: visual
+---
+
+```{r}
+#| warning: false
+#| message: false
+
+library(tidycensus)
+library(tidyverse)
+library(choroplethr)
+library(choroplethrMaps)
+library(scales)
+
+
+df = get_acs(geography = "State",
+             variables = c(pop_65_plus = "S0101_C01_030"),
+             survey    = "acs1",
+             year      = 2021,
+             output    = "wide",
+             cache_table = TRUE)
+total_df = get_acs(geography = "State",
+             variables = c(total = "S0101_C01_001"),
+             survey    = "acs1",
+             year      = 2021,
+              output    = "wide",
+              cache_table = TRUE)
+percent_df  = get_acs(geography = "State",
+                     variables = c(total = "S0101_C01_001"),
+                     survey    = "acs1",
+                     year      = 2021,
+                     output    = "wide",
+                     cache_table = TRUE)
+
+names(df) <-c("geoid" ,"region" ,"value", "moe")
+names(total_df) <-c("geoid" ,"region" ,"value", "moe")
+names(percent_df) <-c("geoid" ,"region" ,"value", "moe")
+
+df$region = tolower(df$region)
+percent_df$region = tolower(percent_df$region)
+total_df$region = tolower(total_df$region)
+
+percent_df$value = ((df$value/total_df$value) * 100)
+total_df$value = total_df$value - df$value
+
+state_choropleth(percent_df,
+                 title = "PERCENT POPULATION OVER 65 \n2021 1-YEAR ACS S0101_C01_001",
+                 legend = "PERCENTAGE"
+                 )
+
+ggplot(percent_df, aes(y = value)) +
+  geom_boxplot(color="red", fill="orange", alpha=1) + 
+  scale_y_continuous(label=comma) +
+  ggtitle("PERCENT DISTRIBUTION STATES\n WITH POPULATION 65+") +
+  xlab("")+
+ylab("POPULATION")+
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) 
+
+
+
+
+```
+
+## MAP AGE 65+
+
+## CODE
+
+```{r}
+#| warning: false
+#| message: false
+
+library(tidycensus)
+library(tidyverse)
+library(choroplethr)
+library(choroplethrMaps)
+library(scales)
+
+
+df = get_acs(geography = "State",
+             variables = c(pop_65_plus = "S0101_C01_030"),
+             survey    = "acs1",
+             year      = 2021,
+             output    = "wide",
+             cache_table = TRUE)
+df$NAME = tolower(df$NAME)
+names(df) <-c("geoid" ,"region" ,"value", "moe")
+
+state_choropleth(df, 
+                 title         = "POPULATION 65+ \n2021 1-YEAR ACS S0101_C01_030",
+                 legend        = "POPULATION")
+
+ggplot(df, aes(y = value)) +
+  geom_boxplot(color="red", fill="orange", alpha=1) + 
+  scale_y_continuous(label=comma) +
+  ggtitle("POPULATION DISTRIBUTION STATES\n WITH POPULATION 65+") +
+  xlab("")+
+ylab("POPULATION")+
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+
+```
+
+## 
