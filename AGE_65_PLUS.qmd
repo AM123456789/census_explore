@@ -122,7 +122,23 @@ ggplotly(x)
 
 ```
 
-## 
+```{}
+```
+
+```{}
+```
+
+```{}
+```
+
+```{}
+```
+
+```{}
+```
+
+```{}
+```
 
 Here is the actual number of individuals age 65 or above as represented in this boxplot distribution. Median is 767,373.
 
