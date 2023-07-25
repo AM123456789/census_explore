@@ -14,6 +14,7 @@ library(tidyverse)
 library(choroplethr)
 library(choroplethrMaps)
 library(scales)
+library(plotly)
 
 
 df = get_acs(geography = "State",
@@ -92,6 +93,7 @@ library(tidyverse)
 library(choroplethr)
 library(choroplethrMaps)
 library(scales)
+library(plotly)
 
 
 df = get_acs(geography = "State",
