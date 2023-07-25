@@ -14,7 +14,7 @@ library(tidyverse)
 library(choroplethr)
 library(choroplethrMaps)
 library(scales)
-
+library(plotly)
 
 df = get_acs(geography = "State",
              variables = c(pop_65_plus = "S0101_C01_030"),
@@ -48,10 +48,11 @@ total_df$value = total_df$value - df$value
 
 state_choropleth(percent_df,
                  title = "PERCENT POPULATION OVER 65 \n2021 1-YEAR ACS S0101_C01_001",
-                 legend = "PERCENTAGE"
+                 legend = "PERCENTAGE",
+                 num_colors = 4
                  )
 
-ggplot(percent_df, aes(y = value)) +
+x = ggplot(percent_df, aes(y = value)) +
   geom_boxplot(color="red", fill="orange", alpha=1) + 
   scale_y_continuous(label=comma) +
   ggtitle("PERCENT DISTRIBUTION STATES\n WITH POPULATION 65+") +
@@ -59,11 +60,20 @@ ggplot(percent_df, aes(y = value)) +
 ylab("POPULATION")+
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank()) 
-
-
-
-
+ggplotly(x)
 ```
+
+This is the main distribution of Data, the median is 17.39 percent
+
+1st Quartile - 16.42%
+
+3rd Quartile - 18.43%
+
+Max 22.69% in Puerto Rico
+
+Min 11.63% in Utah
+
+Also included is a Choroplethr to better Visualize the data
 
 ## MAP AGE 65+
 
@@ -72,13 +82,6 @@ ylab("POPULATION")+
 ```{r}
 #| warning: false
 #| message: false
-
-library(tidycensus)
-library(tidyverse)
-library(choroplethr)
-library(choroplethrMaps)
-library(scales)
-
 
 df = get_acs(geography = "State",
              variables = c(pop_65_plus = "S0101_C01_030"),
@@ -91,9 +94,10 @@ names(df) <-c("geoid" ,"region" ,"value", "moe")
 
 state_choropleth(df, 
                  title         = "POPULATION 65+ \n2021 1-YEAR ACS S0101_C01_030",
-                 legend        = "POPULATION")
+                 legend        = "POPULATION",
+                 num_colors = 4)
 
-ggplot(df, aes(y = value)) +
+x = ggplot(df, aes(y = value)) +
   geom_boxplot(color="red", fill="orange", alpha=1) + 
   scale_y_continuous(label=comma) +
   ggtitle("POPULATION DISTRIBUTION STATES\n WITH POPULATION 65+") +
@@ -101,7 +105,17 @@ ggplot(df, aes(y = value)) +
 ylab("POPULATION")+
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank())
-
+ggplotly(x)
 ```
 
-## 
+Here is the actual number of individuals age 65 or above as represented in this boxplot distribution. Median is 767,373.
+
+1st Quartile - 318,421.5
+
+3nd Quartile - 1,292,812.5
+
+Min - 85,615 in DC
+
+Max - 5,964,526 in California
+
+Choroplethr also included to better visualize data.

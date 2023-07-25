@@ -1,0 +1,121 @@
+---
+title: "AGE_65PLUS_COUNTIES"
+author: "Anish Mangipudi"
+format: html
+editor: visual
+---
+
+```{r}
+#| warning: false
+#| message: false
+
+library(tidycensus)
+library(tidyverse)
+library(choroplethr)
+library(choroplethrMaps)
+library(scales)
+library(plotly)
+
+df = get_acs(geography = "County",
+                       variables = c(pop_65_plus = "S0101_C01_030"),
+                        survey    = "acs5",
+                        year      = 2021,
+                        output    = "wide",
+                         cache_table = TRUE)
+df$NAME = tolower(df$NAME)
+names(df) <-c("region", "county.name state.name" ,"value" ,"moe")
+df$region <- sub("0+$", "", df$region)
+df$region <- as.double(df$region)
+
+county_choropleth(df, 
+                 title         = "POPULATION 65+ \n2021 5-YEAR ACS S0101_C01_030",
+                 legend        = "POPULATION",
+                 num_colors = 4
+                 )
+
+x = ggplot(df, aes(y = value)) +
+  geom_boxplot(color="red", fill="orange", alpha=1) + 
+  scale_y_continuous(label=comma) +
+  ggtitle("POPULATION DISTRIBUTION COUNTIES\n WITH POPULATION 65+") +
+  xlab("")+
+ylab("POPULATION")+
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+ggplotly(x)
+
+```
+
+Here is a boxplot of the population distribution for individuals of age 65 and over in counties across the US. The median is 4,884.
+
+1st Quartile - 2,174.75
+
+3rd Quartile - 12,388.25
+
+Minimum - 10 in Kalawao County, Hawaii
+
+Maximum - 1,372,217 Los Angeles County, California
+
+Also included is a Choroplethr of the counties for a better visualization.
+
+```{r}
+#| warning: false
+#| message: false
+
+df = get_acs(geography = "County",
+             variables = c(pop_65_plus = "S0101_C01_030"),
+             survey    = "acs5",
+             year      = 2021,
+             output    = "wide",
+             cache_table = TRUE)
+total_df = get_acs(geography = "County",
+             variables = c(total = "S0101_C01_001"),
+             survey    = "acs5",
+             year      = 2021,
+              output    = "wide",
+              cache_table = TRUE)
+percent_df  = get_acs(geography = "County",
+                     variables = c(total = "S0101_C01_001"),
+                     survey    = "acs5",
+                     year      = 2021,
+                     output    = "wide",
+                     cache_table = TRUE)
+
+names(df) <-c("region", "county.name state.name" ,"value" ,"moe")
+names(percent_df) <-c("region", "county.name state.name" ,"value" ,"moe")
+names(total_df) <-c("region", "county.name state.name" ,"value" ,"moe")
+
+
+
+df$region = as.numeric(df$region)
+percent_df$region = as.numeric(percent_df$region)
+total_df$region = as.numeric(total_df$region)
+percent_df$value = ((df$value/total_df$value) * 100)
+total_df$value = total_df$value - df$value
+county_choropleth(percent_df,
+                 title = "PERCENT POPULATION OVER 65 \n2021 5-YEAR ACS S0101_C01_001",
+                 legend = "PERCENTAGE",
+                 num_colors = 4
+                 )
+
+x = ggplot(percent_df, aes(y = value)) +
+  geom_boxplot(color="red", fill="orange", alpha=1) + 
+  scale_y_continuous(label=comma) +
+  ggtitle("PERCENT DISTRIBUTION STATES\n WITH POPULATION 65+") +
+  xlab("")+
+ylab("POPULATION")+
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) 
+ggplotly(x)
+```
+
+Here is a boxplot of the percentage distribution for individuals of age 65 and over. The median is 18.85%.
+
+1st Quartile - 16.23%
+
+3rd Quartile - 21.71%
+
+Minimum - 3.07% in Chattahoochee County, Georgia
+
+Maximum - 57.63% Sumter County, Florida
+
+Also included is a Choroplethr of the counties for a better visualization.
