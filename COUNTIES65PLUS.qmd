@@ -6,7 +6,7 @@ editor: visual
 ---
 
 ```{r}
-#| message: false
+#| warning: false
 #| message: false
 
 library(tidycensus)
@@ -45,10 +45,20 @@ ggplotly(x)
 
 ```
 
-You can add options to executable code like this
+Here is a boxplot of the population distribution for individuals of age 65 and over in counties across the US. The median is 4,884.
+
+1st Quartile - 2,174.75
+
+3rd Quartile - 12,388.25
+
+Minimum - 10 in Kalawao County, Hawaii
+
+Maximum - 1,372,217 Los Angeles County, California
+
+Also included is a Choroplethr of the counties for a better visualization.
 
 ```{r}
-#| message: false
+#| warning: false
 #| message: false
 
 library(tidycensus)
@@ -115,4 +125,14 @@ ggplotly(x)
 
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+Here is a boxplot of the percentage distribution for individuals of age 65 and over. The median is 18.85%.
+
+1st Quartile - 16.23%
+
+3rd Quartile - 21.71%
+
+Minimum - 3.07% in Chattahoochee County, Georgia
+
+Maximum - 57.63% Sumter County, Florida
+
+Also included is a Choroplethr of the counties for a better visualization.
