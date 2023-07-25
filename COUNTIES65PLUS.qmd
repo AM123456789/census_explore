@@ -15,7 +15,7 @@ library(choroplethr)
 library(choroplethrMaps)
 library(scales)
 library(plotly)
- 
+
 df = get_acs(geography = "County",
                        variables = c(pop_65_plus = "S0101_C01_030"),
                         survey    = "acs5",

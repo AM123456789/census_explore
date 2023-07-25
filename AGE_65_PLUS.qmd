@@ -16,7 +16,6 @@ library(choroplethrMaps)
 library(scales)
 library(plotly)
 
-
 df = get_acs(geography = "State",
              variables = c(pop_65_plus = "S0101_C01_030"),
              survey    = "acs1",
@@ -66,6 +65,7 @@ ggplotly(x)
 
 
 
+
 ```
 
 This is the main distribution of Data, the median is 17.39 percent
@@ -87,14 +87,6 @@ Also included is a Choroplethr to better Visualize the data
 ```{r}
 #| warning: false
 #| message: false
-
-library(tidycensus)
-library(tidyverse)
-library(choroplethr)
-library(choroplethrMaps)
-library(scales)
-library(plotly)
-
 
 df = get_acs(geography = "State",
              variables = c(pop_65_plus = "S0101_C01_030"),
