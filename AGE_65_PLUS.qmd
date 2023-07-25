@@ -46,12 +46,6 @@ total_df$region = tolower(total_df$region)
 percent_df$value = ((df$value/total_df$value) * 100)
 total_df$value = total_df$value - df$value
 
-state_choropleth(percent_df,
-                 title = "PERCENT POPULATION OVER 65 \n2021 1-YEAR ACS S0101_C01_001",
-                 legend = "PERCENTAGE",
-                 num_colors = 4
-                 )
-
 x = ggplot(percent_df, aes(y = value)) +
   geom_boxplot(color="red", fill="orange", alpha=1) + 
   scale_y_continuous(label=comma) +
@@ -73,6 +67,17 @@ Max 22.69% in Puerto Rico
 
 Min 11.63% in Utah
 
+```{r}
+#| warning: false
+#| message: false
+state_choropleth(percent_df,
+                 title = "PERCENT POPULATION OVER 65 \n2021 1-YEAR ACS S0101_C01_001",
+                 legend = "PERCENTAGE",
+                 num_colors = 4
+                 )
+
+```
+
 Also included is a Choroplethr to better Visualize the data
 
 ## MAP AGE 65+
@@ -91,11 +96,6 @@ df = get_acs(geography = "State",
              cache_table = TRUE)
 df$NAME = tolower(df$NAME)
 names(df) <-c("geoid" ,"region" ,"value", "moe")
-
-state_choropleth(df, 
-                 title         = "POPULATION 65+ \n2021 1-YEAR ACS S0101_C01_030",
-                 legend        = "POPULATION",
-                 num_colors = 4)
 
 x = ggplot(df, aes(y = value)) +
   geom_boxplot(color="red", fill="orange", alpha=1) + 
@@ -117,5 +117,14 @@ Here is the actual number of individuals age 65 or above as represented in this 
 Min - 85,615 in DC
 
 Max - 5,964,526 in California
+
+```{r}
+#| warning: false
+#| message: false
+state_choropleth(df, 
+                 title         = "POPULATION 65+ \n2021 1-YEAR ACS S0101_C01_030",
+                 legend        = "POPULATION",
+                 num_colors = 4)
+```
 
 Choroplethr also included to better visualize data.
