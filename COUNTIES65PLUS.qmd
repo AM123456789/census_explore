@@ -13,7 +13,6 @@ library(tidycensus)
 library(tidyverse)
 library(choroplethr)
 library(choroplethrMaps)
-library(ggplot2)
 library(scales)
  
 df = get_acs(geography = "County",
@@ -66,7 +65,6 @@ library(tidyverse)
 library(choroplethr)
 library(choroplethrMaps)
 library(scales)
-library(ggplot2)
 
 
 df = get_acs(geography = "County",
