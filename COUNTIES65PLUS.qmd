@@ -61,14 +61,6 @@ Also included is a Choroplethr of the counties for a better visualization.
 #| warning: false
 #| message: false
 
-library(tidycensus)
-library(tidyverse)
-library(choroplethr)
-library(choroplethrMaps)
-library(scales)
-library(plotly)
-
-
 df = get_acs(geography = "County",
              variables = c(pop_65_plus = "S0101_C01_030"),
              survey    = "acs5",
@@ -93,15 +85,10 @@ names(percent_df) <-c("region", "county.name state.name" ,"value" ,"moe")
 names(total_df) <-c("region", "county.name state.name" ,"value" ,"moe")
 
 
-df$region = tolower(df$region)
-percent_df$region = tolower(percent_df$region)
-total_df$region = tolower(total_df$region)
-df$region <- sub("0+$", "", df$region)
-df$region <- as.double(df$region)
-total_df$region <- sub("0+$", "", total_df$region)
-total_df$region <- as.double(total_df$region)
-percent_df$region <- sub("0+$", "", percent_df$region)
-percent_df$region <- as.double(percent_df$region)
+
+df$region = as.numeric(df$region)
+percent_df$region = as.numeric(percent_df$region)
+total_df$region = as.numeric(total_df$region)
 percent_df$value = ((df$value/total_df$value) * 100)
 total_df$value = total_df$value - df$value
 county_choropleth(percent_df,
@@ -119,11 +106,6 @@ ylab("POPULATION")+
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank()) 
 ggplotly(x)
-
-
-
-
-
 ```
 
 Here is a boxplot of the percentage distribution for individuals of age 65 and over. The median is 18.85%.
