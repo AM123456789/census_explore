@@ -48,7 +48,8 @@ total_df$value = total_df$value - df$value
 
 state_choropleth(percent_df,
                  title = "PERCENT POPULATION OVER 65 \n2021 1-YEAR ACS S0101_C01_001",
-                 legend = "PERCENTAGE"
+                 legend = "PERCENTAGE",
+                 num_colors = 4
                  )
 
 x = ggplot(percent_df, aes(y = value)) +
