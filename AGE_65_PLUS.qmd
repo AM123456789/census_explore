@@ -61,11 +61,6 @@ ylab("POPULATION")+
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank()) 
 ggplotly(x)
-
-
-
-
-
 ```
 
 This is the main distribution of Data, the median is 17.39 percent
@@ -111,25 +106,6 @@ ylab("POPULATION")+
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank())
 ggplotly(x)
-
-```
-
-```{}
-```
-
-```{}
-```
-
-```{}
-```
-
-```{}
-```
-
-```{}
-```
-
-```{}
 ```
 
 Here is the actual number of individuals age 65 or above as represented in this boxplot distribution. Median is 767,373.
