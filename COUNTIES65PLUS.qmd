@@ -6,7 +6,8 @@ editor: visual
 ---
 
 ```{r}
-
+#| message: false
+#| message: false
 
 library(tidycensus)
 library(tidyverse)
@@ -22,22 +23,25 @@ df = get_acs(geography = "County",
                         output    = "wide",
                          cache_table = TRUE)
 df$NAME = tolower(df$NAME)
-names(df) <-c("region", "county.name state.name" ,"county.fips.character" ,"value", "state.abb")
+names(df) <-c("region", "county.name state.name" ,"value" ,"moe")
 df$region <- sub("0+$", "", df$region)
 df$region <- as.double(df$region)
 
 county_choropleth(df, 
                  title         = "POPULATION 65+ \n2021 5-YEAR ACS S0101_C01_030",
-                 legend        = "POPULATION")
+                 legend        = "POPULATION",
+                 num_colors = 4
+                 )
 
-ggplot(df, aes(y = value)) +
+x = ggplot(df, aes(y = value)) +
   geom_boxplot(color="red", fill="orange", alpha=1) + 
   scale_y_continuous(label=comma) +
-  ggtitle("POPULATION DISTRIBUTION STATES\n WITH POPULATION 65+") +
+  ggtitle("POPULATION DISTRIBUTION COUNTIES\n WITH POPULATION 65+") +
   xlab("")+
 ylab("POPULATION")+
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank())
+ggplotly(x)
 
 ```
 
@@ -73,10 +77,9 @@ percent_df  = get_acs(geography = "County",
                      output    = "wide",
                      cache_table = TRUE)
 
-names(df) <-c("region", "county.name state.name" ,"county.fips.character" ,"value", "state.abb")
-names(percent_df) <-c("region", "county.name state.name" ,"county.fips.character" ,"value", "state.abb")
-names(total_df) <-c("region", "county.name state.name" ,"county.fips.character" ,"value", "state.abb")
-
+names(df) <-c("region", "county.name state.name" ,"value" ,"moe")
+names(percent_df) <-c("region", "county.name state.name" ,"value" ,"moe")
+names(total_df) <-c("region", "county.name state.name" ,"value" ,"moe")
 
 
 df$region = tolower(df$region)
@@ -92,10 +95,11 @@ percent_df$value = ((df$value/total_df$value) * 100)
 total_df$value = total_df$value - df$value
 county_choropleth(percent_df,
                  title = "PERCENT POPULATION OVER 65 \n2021 5-YEAR ACS S0101_C01_001",
-                 legend = "PERCENTAGE"
+                 legend = "PERCENTAGE",
+                 num_colors = 4
                  )
 
-ggplot(percent_df, aes(y = value)) +
+x = ggplot(percent_df, aes(y = value)) +
   geom_boxplot(color="red", fill="orange", alpha=1) + 
   scale_y_continuous(label=comma) +
   ggtitle("PERCENT DISTRIBUTION STATES\n WITH POPULATION 65+") +
@@ -103,6 +107,7 @@ ggplot(percent_df, aes(y = value)) +
 ylab("POPULATION")+
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank()) 
+ggplotly(x)
 
 
 
