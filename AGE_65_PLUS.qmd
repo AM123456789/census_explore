@@ -22,6 +22,56 @@ df = get_acs(geography = "State",
              year      = 2021,
              output    = "wide",
              cache_table = TRUE)
+df$NAME = tolower(df$NAME)
+names(df) <-c("geoid" ,"region" ,"value", "moe")
+
+x = ggplot(df, aes(y = value)) +
+  geom_boxplot(color="red", fill="orange", alpha=1) + 
+  scale_y_continuous(label=comma) +
+  ggtitle("POPULATION DISTRIBUTION STATES\n WITH POPULATION 65+") +
+  xlab("")+
+ylab("POPULATION")+
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+ggplotly(x)
+```
+
+Here is the actual number of individuals age 65 or above as represented in this boxplot distribution. Median is 767,373.
+
+1st Quartile - 318,421.5
+
+3nd Quartile - 1,292,812.5
+
+Min - 85,615 in DC
+
+Max - 5,964,526 in California
+
+```{r}
+#| warning: false
+#| message: false
+
+state_choropleth(df, 
+                 title         = "POPULATION 65+ \n2021 1-YEAR ACS S0101_C01_030",
+                 legend        = "POPULATION",
+                 num_colors = 4)
+```
+
+Also included is a Choroplethr to better Visualize the data
+
+## MAP AGE 65+
+
+## CODE
+
+```{r}
+#| warning: false
+#| message: false
+
+df = get_acs(geography = "State",
+             variables = c(pop_65_plus = "S0101_C01_030"),
+             survey    = "acs1",
+             year      = 2021,
+             output    = "wide",
+             cache_table = TRUE)
 total_df = get_acs(geography = "State",
              variables = c(total = "S0101_C01_001"),
              survey    = "acs1",
@@ -70,61 +120,14 @@ Min 11.63% in Utah
 ```{r}
 #| warning: false
 #| message: false
+
 state_choropleth(percent_df,
                  title = "PERCENT POPULATION OVER 65 \n2021 1-YEAR ACS S0101_C01_001",
                  legend = "PERCENTAGE",
                  num_colors = 4
                  )
-
-```
-
-Also included is a Choroplethr to better Visualize the data
-
-## MAP AGE 65+
-
-## CODE
-
-```{r}
-#| warning: false
-#| message: false
-
-df = get_acs(geography = "State",
-             variables = c(pop_65_plus = "S0101_C01_030"),
-             survey    = "acs1",
-             year      = 2021,
-             output    = "wide",
-             cache_table = TRUE)
-df$NAME = tolower(df$NAME)
-names(df) <-c("geoid" ,"region" ,"value", "moe")
-
-x = ggplot(df, aes(y = value)) +
-  geom_boxplot(color="red", fill="orange", alpha=1) + 
-  scale_y_continuous(label=comma) +
-  ggtitle("POPULATION DISTRIBUTION STATES\n WITH POPULATION 65+") +
-  xlab("")+
-ylab("POPULATION")+
-  theme(axis.text.x=element_blank(),
-        axis.ticks.x=element_blank())
-ggplotly(x)
-```
-
-Here is the actual number of individuals age 65 or above as represented in this boxplot distribution. Median is 767,373.
-
-1st Quartile - 318,421.5
-
-3nd Quartile - 1,292,812.5
-
-Min - 85,615 in DC
-
-Max - 5,964,526 in California
-
-```{r}
-#| warning: false
-#| message: false
-state_choropleth(df, 
-                 title         = "POPULATION 65+ \n2021 1-YEAR ACS S0101_C01_030",
-                 legend        = "POPULATION",
-                 num_colors = 4)
 ```
 
 Choroplethr also included to better visualize data.
+
+REPO LINK https://github.com/AM123456789/census_explore
