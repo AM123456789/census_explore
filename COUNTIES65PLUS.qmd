@@ -41,9 +41,9 @@ ggplotly(x)
 
 Here is a boxplot of the population distribution for individuals of age 65 and over in counties across the US. The median is 4,884.
 
-1st Quartile - 2,174.75
+1st Quartile - 2,174
 
-3rd Quartile - 12,388.25
+3rd Quartile - 12,388
 
 Minimum - 10 in Kalawao County, Hawaii
 
@@ -95,11 +95,6 @@ percent_df$region = as.numeric(percent_df$region)
 total_df$region = as.numeric(total_df$region)
 percent_df$value = ((df$value/total_df$value) * 100)
 total_df$value = total_df$value - df$value
-county_choropleth(percent_df,
-                 title = "PERCENT POPULATION OVER 65 \n2021 5-YEAR ACS S0101_C01_001",
-                 legend = "PERCENTAGE",
-                 num_colors = 4
-                 )
 
 x = ggplot(percent_df, aes(y = value)) +
   geom_boxplot(color="red", fill="orange", alpha=1) + 

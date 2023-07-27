@@ -38,9 +38,9 @@ ggplotly(x)
 
 Here is the actual number of individuals age 65 or above as represented in this boxplot distribution. Median is 767,373.
 
-1st Quartile - 318,421.5
+1st Quartile - 318,421
 
-3nd Quartile - 1,292,812.5
+3rd Quartile - 1,292,812
 
 Min - 85,615 in DC
 
